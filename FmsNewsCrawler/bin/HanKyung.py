@@ -2,9 +2,12 @@
 from bs4 import BeautifulSoup
 import requests
 import configparser
+import json
 
 from HtmlParser import HtmlParser
 from CrawlerNewspaper import CrawlerNewspaper
+from Article import Article
+from PulsarStore import PulsarStore
 
 class HanKyung:
 
@@ -15,7 +18,7 @@ class HanKyung:
         self.conf = conf
         self.html = HtmlParser(conf)
         self.news = CrawlerNewspaper(conf)
-
+        self.pulsar = PulsarStore(conf['pulsar']['ip'], conf['pulsar']['port'])
 
     def parseLinkArtcle(self, url):
         buf = []
@@ -38,23 +41,28 @@ class HanKyung:
         links = self.parseLinkArtcle(url)
         for v in links:
             (title, text) = self.news.crawling(v)
+            art = Article(self.getStringFilter(title), self.getStringFilter(text))
             print("title : ", title)
             print("text : ", text)
-            ret.append((self.getStringFilter(title), self.getStringFilter(text)))
+            ret.append(art.toDic())
         return ret
 
-    def test(self):
+    def crawling(self):
         ret = self.parsingNews(self.url1)
-        print("ret : ", ret)
-        ret = self.parsingNews(self.url2)
-        print("ret : ", ret)
-        ret = self.parsingNews(self.url3)
-        print("ret : ", ret)
+        ret.extend(self.parsingNews(self.url2))
+        ret.extend(self.parsingNews(self.url3))
+
+        cl = self.pulsar.getClient()
+        pro = self.pulsar.createProcuder(cl, "newspaper")
+        for dd in ret:
+            jj = json.dumps(dd)
+            print("send data : ", jj)
+            pro.send(jj.encode('utf-8'))
+        cl.close()
 
         
 if __name__ == '__main__':
-    cc = "../conf/config.conf"
-    conf = configparser.ConfigParser()
-    conf.read(cc)
+    conf = {}
+    conf['pulsar'] = {"ip":"172.17.0.5", "port":6650}
     rr = HanKyung(conf)
-    rr.test()
+    rr.crawling()
