@@ -48,6 +48,7 @@ class HanKyung:
         return ret
 
     def crawling(self):
+        #wp = open("test.jsonl", 'w')
         ret = self.parsingNews(self.url1)
         ret.extend(self.parsingNews(self.url2))
         ret.extend(self.parsingNews(self.url3))
@@ -57,7 +58,9 @@ class HanKyung:
         for dd in ret:
             jj = json.dumps(dd)
             print("send data : ", jj)
+            #wp.write(jj + "\n")
             pro.send(jj.encode('utf-8'))
+        #wp.close()
         cl.close()
 
         

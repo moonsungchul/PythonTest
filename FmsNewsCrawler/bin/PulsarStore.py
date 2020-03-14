@@ -19,11 +19,13 @@ class PulsarStore:
     def test(self):
         cl = self.getClient()
         pro = self.createProcuder(cl, "newspaper")
-        for i in range(10):
+        for i in range(50):
+            print("send ...")
             pro.send(('Hello-%d' % i).encode('utf-8'))
         cl.close()
 
-        '''
+
+    def test2(self):
         cl = self.getClient()
         consumer = self.createConsumer(cl, "newspaper", "news")
         while True:
@@ -36,12 +38,23 @@ class PulsarStore:
                 # Message failed to be processed
                 consumer.negative_acknowledge(msg)
         cl.close()
-        '''
+
+    def test3(self):
+        rp = open("./test.jsonl", 'r')
+        cl = self.getClient()
+        pro = self.createProcuder(cl, "newspaper")
+        for v in rp:
+            print(v)
+            pro.send(v.encode('utf-8'))
+        rp.close()
+        cl.close()
+        
+        
 
 
 
 if __name__ == "__main__":
-    rr = PulsarStore("172.17.0.5", 6650)
-    rr.test()
+    rr = PulsarStore("localhost", 6650)
+    rr.test3()
 
         
