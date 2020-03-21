@@ -5,7 +5,7 @@ from newspaper import Article
 
 class CrawlerNewspaper:
     """
-    지정된 url의 신분 가사를 가져온다. 
+    지정된 url의 신문 가사를 가져온다. 
     """
 
     def __init__(self, conf):
