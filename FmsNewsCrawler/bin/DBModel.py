@@ -17,8 +17,8 @@ class NewsSite(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255))
     url = Column(String(1000))
-    crawling_time = Column(String(100))
-
+    start_time = Column(String(100))  # crawling 시작 시간 
+    down_time = Column(String(100))   # crawling 한 시간 
 
     def __init__(self, name, url, cr_time):
         self.name = name

@@ -20,6 +20,12 @@ class DBStore:
         user = DBModel.NewsSite("mm", "url", "2020-03-20")
         print(user)
         self.insertUser(user)
+
+    def saveInitData(self):
+        news1 = DBModel.NewsSite("한국경제", "https://www.hankyung.com", 12)
+        news2 = DBModel.NewsSite("매일경제", "https://www.mk.co.kr/news", 10)
+        self.insertUser(news1)
+        self.insertUser(news2)
         
 
 
@@ -33,7 +39,8 @@ if __name__ == '__main__':
     DBModel.db.create_all()
 
     store = DBStore(DBModel.db)
-    store.test()
+    #store.test()
+    store.saveInitData()
 
 
 
