@@ -11,9 +11,14 @@ class DBStore:
     def __init__(self, db):
         self.db = db
 
-    def insertUser(self, user):
-        self.db.session.add(user)
+    def insert(self, obj):
+        self.db.session.add(obj)
         self.db.session.commit()
+
+
+    def commit(self):
+        self.db.session.commit()
+
 
 
     def test(self):
@@ -22,11 +27,14 @@ class DBStore:
         self.insertUser(user)
 
     def saveInitData(self):
-        news1 = DBModel.NewsSite("한국경제", "https://www.hankyung.com", 12)
-        news2 = DBModel.NewsSite("매일경제", "https://www.mk.co.kr/news", 10)
-        self.insertUser(news1)
-        self.insertUser(news2)
-        
+        news1 = DBModel.NewsSite("한국경제", "https://www.hankyung.com", "2020-03-25 22:20:00", True)
+        news2 = DBModel.NewsSite("매일경제", "https://www.mk.co.kr/news", "2020-03-25 22:20:00", True)
+        self.insert(news1)
+        self.insert(news2)
+
+
+    def getNewsSites(self):
+        return self.db.session.query(DBModel.NewsSite).all()
 
 
 if __name__ == '__main__':
@@ -41,6 +49,7 @@ if __name__ == '__main__':
     store = DBStore(DBModel.db)
     #store.test()
     store.saveInitData()
+    store.getNewsSites()
 
 
 

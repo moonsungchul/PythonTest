@@ -17,20 +17,20 @@ class NewsSite(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255))
     url = Column(String(1000))
-    start_time = Column(String(100))  # crawling 시작 시간 
     down_time = Column(String(100))   # crawling 한 시간 
+    crawling_sw = Column(Boolean)
 
-    def __init__(self, name, url, cr_time):
+    def __init__(self, name, url, dtime, cr_sw):
         self.name = name
         self.url = url
-        self.crawling_time = cr_time
+        self.down_time = dtime
+        self.crawling_sw = cr_sw
 
     def __repr__(self):
-        return "<NewsSite('%s', '%s', '%s', '%s')>" % (self.id, self.name, self.url, self.crawling_time)
-
+        return "<NewsSite('%s', '%s', '%s', '%s',  '%s')>" % \
+                (self.id, self.name, self.url,  \
+                self.down_time, self.crawling_sw)
 
     
-    
-        
 
     
