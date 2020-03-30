@@ -47,7 +47,7 @@ class FETimes:
         for v in links:
             (title, text) = self.news.crawling(v)
             text = text.replace("저작권자 © 금융경제신문 무단전재 및 재배포 금지", "")
-            art = Article(self.getStringFilter(title), self.getStringFilter(text), "한국경제")
+            art = Article(self.getStringFilter(title), self.getStringFilter(text), "금융경제")
             #print("title : ", title)
             #print("text : ", text)
             
