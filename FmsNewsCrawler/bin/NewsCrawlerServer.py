@@ -8,8 +8,6 @@ from DBStore import DBStore
 from CrawlingSchedule import CrawlingSchedule  
 import configparser
 
-
-
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///./news_crawler.db"
