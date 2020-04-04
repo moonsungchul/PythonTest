@@ -7,6 +7,7 @@ import DBModel
 from DBStore import DBStore
 from CrawlingSchedule import CrawlingSchedule  
 import configparser
+from CrawlerManager import CrawlerManager
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,7 +21,8 @@ dbstore = DBStore(DBModel.db)
 conf = configparser.ConfigParser()
 conf.read("../conf/config.conf")
 
-crawler = CrawlingSchedule(dbstore, conf)
+manager = CrawlerManager(conf, dbstore)
+crawler = CrawlingSchedule(manager)
 
 
 if __name__ == '__main__':

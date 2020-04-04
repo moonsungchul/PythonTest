@@ -1,10 +1,15 @@
 
 from datetime import datetime
+from pytz import timezone, utc
 
 class Log:
 
     def __init__(self, ltype="", key="", msg=""):
-        self.log_time = str(datetime.now())
+        kst = timezone('Asia/Seoul')
+        date =  datetime.now()
+        l = kst.localize(date)
+        
+        self.log_time = str(l)
         self.log_type = ltype
         self.log_key = key
         self.log_msg = msg 

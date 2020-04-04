@@ -15,11 +15,8 @@ class DBStore:
         self.db.session.add(obj)
         self.db.session.commit()
 
-
     def commit(self):
         self.db.session.commit()
-
-
 
     def test(self):
         user = DBModel.NewsSite("mm", "url", "2020-03-20")
@@ -50,6 +47,8 @@ if __name__ == '__main__':
     #store.test()
     store.saveInitData()
     store.getNewsSites()
+
+    
 
 
 

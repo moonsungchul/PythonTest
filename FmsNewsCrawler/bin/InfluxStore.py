@@ -23,6 +23,8 @@ class InfluxStore:
         self.client = InfluxDBClient(database=dbname, host=host, port=port)
         return self.client
 
+    def write(self, obj):
+        self.client.write_points([obj])
 
     def getLogs(self):
         sql = "select * from log"

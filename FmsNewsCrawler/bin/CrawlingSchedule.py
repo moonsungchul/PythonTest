@@ -14,10 +14,12 @@ import random
 
 class CrawlingSchedule(threading.Thread):
 
-    def __init__(self, db, conf):
+    #def __init__(self, db, conf):
+    def __init__(self, manager):
         threading.Thread.__init__(self)
-        self.conf = conf
-        self.store = db  
+        self.conf = manager.conf
+        self.store = manager.dbstore
+        self.logger = manager.logger
         self.hankyung = HanKyung(self.conf)
         self.maeil = Maeil(self.conf)
 
