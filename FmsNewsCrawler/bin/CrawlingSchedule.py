@@ -11,6 +11,8 @@ import datetime, time
 import schedule
 import threading, requests, time
 import random
+from CrawlerManager import CrawlerManager
+import configparser
 
 class CrawlingSchedule(threading.Thread):
 
@@ -71,7 +73,7 @@ class CrawlingSchedule(threading.Thread):
         while self.thread_sw:
             print("thread pending ...")
             schedule.run_pending()
-            time.sleep(600)
+            time.sleep(60)
 
 
 if __name__ == '__main__':
@@ -83,15 +85,18 @@ if __name__ == '__main__':
     app.app_context().push()
     DBModel.db.create_all()
 
-    conf = {}
-    conf['pulsar'] = {"ip":"172.17.0.5", "port":6650}
+    #conf = {}
+    #conf['pulsar'] = {"ip":"172.17.0.5", "port":6650}
+    conf = configparser.ConfigParser() 
+    conf.read("../conf/config.conf")
 
     store = DBStore(DBModel.db )
+    manager = CrawlerManager(conf, store)
 
-    rr = CrawlingSchedule(store, conf)
+    rr = CrawlingSchedule(manager)
     #rr.job()
     rr.start()
 
-    time.sleep(100)
+    time.sleep(200)
     rr.stopThread()
 

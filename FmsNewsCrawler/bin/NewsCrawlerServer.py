@@ -27,6 +27,7 @@ crawler = CrawlingSchedule(manager)
 
 if __name__ == '__main__':
     print("Start News papaper Crawling Server ...")
+    manager.logger.info("SERVER", "Crawling Server start")
     crawler.start()
     app.run(debug=True)
     
