@@ -8,15 +8,18 @@ import DBModel
 
 class DBStore:
 
-    def __init__(self, db):
+    def __init__(self, db, app):
         self.db = db
+        self.app = app
 
     def insert(self, obj):
-        self.db.session.add(obj)
-        self.db.session.commit()
+        with app.app_context():
+            self.db.session.add(obj)
+            self.db.session.commit()
 
     def commit(self):
-        self.db.session.commit()
+        with app.app_context():
+            self.db.session.commit()
 
     def test(self):
         user = DBModel.NewsSite("mm", "url", "2020-03-20")
@@ -31,7 +34,8 @@ class DBStore:
 
 
     def getNewsSites(self):
-        return self.db.session.query(DBModel.NewsSite).all()
+        with app.app_context():
+            return self.db.session.query(DBModel.NewsSite).all()
 
 
 if __name__ == '__main__':

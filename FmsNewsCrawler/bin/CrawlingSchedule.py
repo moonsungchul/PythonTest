@@ -63,7 +63,6 @@ class CrawlingSchedule(threading.Thread):
         print("crawling self.crawing_count ", self.crawling_count)
 
 
-
     def stopThread(self):
         self.thread_sw = False
 
@@ -73,7 +72,7 @@ class CrawlingSchedule(threading.Thread):
         while self.thread_sw:
             print("thread pending ...")
             schedule.run_pending()
-            time.sleep(60)
+            time.sleep(600)
 
 
 if __name__ == '__main__':

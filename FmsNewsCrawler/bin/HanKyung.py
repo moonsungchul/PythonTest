@@ -69,6 +69,6 @@ class HanKyung:
         
 if __name__ == '__main__':
     conf = {}
-    conf['pulsar'] = {"ip":"172.17.0.5", "port":6650}
+    conf['pulsar'] = {"ip":"localhost", "port":6650}
     rr = HanKyung(conf)
     rr.crawling()
