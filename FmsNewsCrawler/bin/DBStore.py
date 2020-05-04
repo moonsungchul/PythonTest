@@ -13,12 +13,12 @@ class DBStore:
         self.app = app
 
     def insert(self, obj):
-        with app.app_context():
+        with self.app.app_context():
             self.db.session.add(obj)
             self.db.session.commit()
 
     def commit(self):
-        with app.app_context():
+        with self.app.app_context():
             self.db.session.commit()
 
     def test(self):
@@ -34,7 +34,7 @@ class DBStore:
 
 
     def getNewsSites(self):
-        with app.app_context():
+        with self.app.app_context():
             return self.db.session.query(DBModel.NewsSite).all()
 
 
