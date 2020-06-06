@@ -54,7 +54,7 @@ class PulsarStore:
 
 
 if __name__ == "__main__":
-    rr = PulsarStore("localhost", 6650)
+    rr = PulsarStore("192.168.0.31", 6650)
     rr.test3()
 
         

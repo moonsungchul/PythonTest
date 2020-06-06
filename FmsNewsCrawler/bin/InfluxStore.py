@@ -62,12 +62,12 @@ class InfluxStore:
 
 
 if __name__ == '__main__':
-    hh = "localhost"
-    port = 28086
+    hh = "192.168.0.29"
+    port = 8086
     dbname = "NewsCrawlerLog"
     store = InfluxStore(hh, port)
-    #store.createDB(dbname)
-    #store.switchDB(dbname)
+    store.createDB(dbname)
+    store.switchDB(dbname)
     #store.openDB(dbname, hh, port)
-    store.test()
+    #store.test()
     
