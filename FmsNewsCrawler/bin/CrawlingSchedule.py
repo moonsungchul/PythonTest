@@ -35,33 +35,28 @@ class CrawlingSchedule(threading.Thread):
     def job(self):
         today = datetime.datetime.now()
         dif = today - self.last_crawling
+        print(">>>>>> dif : ", dif.days)
         if dif.days > 1:
-            self.today_hour = random.randint(1, 23)
             self.last_crawling = datetime.datetime.now()
             self.crawling_sw = True
-            self.crawling_count = 0
 
-
-        if self.crawling_sw == True and self.crawling_count == self.today_hour:
-            print("crawling .........  ", self.crawling_count, self.today_hour)
-            self.crawling_sw = False
+        print(">>>>>> crawling count : ", self.crawling_sw)
+        if self.crawling_sw == True:
             arts = self.store.getNewsSites()
             for v in arts:
                 if v.crawling_sw == True:
                     if v.name == "한국경제":
                         self.hankyung.crawling()
-                        print("downlaod hanyung ...")
+                        print("downlaod 한국경제   ...")
                         v.down_time = str(datetime.datetime.now())
                         self.store.commit()
                     
                     elif v.name == "매일경제":
                         self.maeil.crawling()
-                        print("downlaod maeil ...")
+                        print("downlaod mail 경제  ...")
                         v.down_time = str(datetime.datetime.now())
                         self.store.commit()
-        self.crawling_count += 1
-        print("crawling self.crawing_count ", self.crawling_count)
-
+            self.crawling_sw = False
 
     def stopThread(self):
         self.thread_sw = False
@@ -69,6 +64,8 @@ class CrawlingSchedule(threading.Thread):
 
     def run(self):
         schedule.every().hour.do(self.job)
+        #schedule.every().minutes.do(self.job)
+        #schedule.every(10).seconds.do(self.job)
         while self.thread_sw:
             print("thread pending ...")
             schedule.run_pending()

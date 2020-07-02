@@ -13,12 +13,13 @@ db = SQLAlchemy()
 class NewsSite(db.Model):
     
     __tablename__ = 'NewsSite'
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255))
     url = Column(String(1000))
     down_time = Column(String(100))   # crawling 한 시간 
     crawling_sw = Column(Boolean)
+
+
 
     def __init__(self, name, url, dtime, cr_sw):
         self.name = name

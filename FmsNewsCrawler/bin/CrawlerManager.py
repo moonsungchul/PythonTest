@@ -17,6 +17,8 @@ class CrawlerManager:
         self.influx = InfluxStore(conf['influx']['host'], conf['influx']['port']) 
         self.influx.switchDB(conf['influx']['dbname'])
         self.logger = InfluxLogger(self.influx) 
+
+        #self.dbstore.saveInitData()
         
 
 if __name__ == '__main__':
